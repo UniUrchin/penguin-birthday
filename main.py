@@ -1,4 +1,5 @@
 import pyxel
+import random
 
 COLOR_BLACK      = 0
 COLOR_NAVY       = 1
@@ -91,9 +92,11 @@ class Sweets(PyxelImage):
     self.width = 16
     self.height = 16
 
-  # pos_u, pos_vの組み合わせで挙動を変える
   def fall_down(self):
-    return Sweets(self.pos_x, self.pos_y + 1, self.pos_u, self.pos_v)
+    if self.pos_u // 16 == 0:
+      return Sweets(self.pos_x, self.pos_y + 1, self.pos_u, self.pos_v)
+    if self.pos_u // 16 == 1:
+      return Sweets(self.pos_x, self.pos_y + 2, self.pos_u, self.pos_v)
 
   def is_inside_screen(self):
     return True if self.pos_y < pyxel.height else False
@@ -130,7 +133,7 @@ class App:
 
     ## 2秒(60フレーム)に一回お菓子を生成する処理
     if pyxel.frame_count % 60 == 0:
-      self.sweets_list.append(Sweets(60, 0, 0, 32))
+      self.sweets_list.append(Sweets(random.randint(0, pyxel.width - 16), 0, random.randint(0, 1) * 16, 32))
 
     # 毎フレームやりたい処理
 
@@ -143,9 +146,9 @@ class App:
 
   def update_score(self, sweets):
     if sweets.is_touched(self.penguin.pos_x, self.penguin.pos_y):
-      if sweets.pos_u % 16 == 0:
+      if sweets.pos_u // 16 == 0:
         self.score = Score(30, 4, self.score.word + 100, COLOR_ORANGE, COLOR_BROWN)
-      if sweets.pos_u % 16 == 1:
+      if sweets.pos_u // 16 == 1:
         self.score = Score(30, 4, self.score.word + 200, COLOR_ORANGE, COLOR_BROWN)
       return False
     else:
