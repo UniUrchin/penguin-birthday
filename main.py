@@ -39,10 +39,10 @@ class PyxelPenguinImage(PyxelImage):
 
 class App:
   def __init__(self):
-    pyxel.init(160, 128, title = "Hello Penguin")
+    pyxel.init(160, 128, title = "Birthday Penguin")
     pyxel.load("assetes/main.pyxres")
 
-    self.title = PyxelRainbowText(52, 50, "Hello Penguin!!", 0)
+    self.title = PyxelRainbowText(50, 50, "Happy Birthday!!", 0)
     self.penguin = PyxelPenguinImage(72, 60, 0, 0, 0, 16, 16)
 
     pyxel.run(self.update, self.draw)
