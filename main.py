@@ -26,6 +26,8 @@ SYSTEM_TIME_RIMIT = 60
 # お菓子の識別ナンバー
 SWEETS_DONUT     = 0
 SWEETS_SHORTCAKE = 1
+SWEETS_PUDDING   = 2
+SWEETS_SOFTCREAM = 3
 
 # ページ遷移用変数
 PAGE_MAIN_MENU     = 0
@@ -110,6 +112,10 @@ class Sweets(PyxelImage):
       return Sweets(self.pos_x, self.pos_y + 1, self.pos_u, self.pos_v)
     if self.pos_u // 16 == SWEETS_SHORTCAKE:
       return Sweets(self.pos_x, self.pos_y + 2, self.pos_u, self.pos_v)
+    if self.pos_u // 16 == SWEETS_PUDDING:
+      return Sweets(self.pos_x, self.pos_y + 1, self.pos_u, self.pos_v)
+    if self.pos_u // 16 == SWEETS_SOFTCREAM:
+      return Sweets(self.pos_x, self.pos_y + 2, self.pos_u, self.pos_v)
 
   def is_inside_screen(self):
     return True if self.pos_y < pyxel.height else False
@@ -160,7 +166,7 @@ class App:
 
       ## 2秒に一回お菓子を生成する処理
       if pyxel.frame_count % 60 == 0:
-        self.sweets_list.append(Sweets(random.randint(0, pyxel.width - 16), 0, random.randint(0, 1) * 16, 32))
+        self.sweets_list.append(Sweets(random.randint(0, pyxel.width - 16), 0, random.randint(0, 3) * 16, 32))
 
       ## お菓子の移動とスクリーン外に出たお菓子の廃棄
       self.sweets_list = list(map(lambda sweets: sweets.fall_down(), self.sweets_list))
@@ -190,7 +196,11 @@ class App:
       if sweets.pos_u // 16 == SWEETS_DONUT:
         self.score = Score(26, 4, self.score.word + 100, COLOR_ORANGE, COLOR_BROWN)
       if sweets.pos_u // 16 == SWEETS_SHORTCAKE:
+        self.score = Score(26, 4, self.score.word + 500, COLOR_ORANGE, COLOR_BROWN)
+      if sweets.pos_u // 16 == SWEETS_PUDDING:
         self.score = Score(26, 4, self.score.word + 200, COLOR_ORANGE, COLOR_BROWN)
+      if sweets.pos_u // 16 == SWEETS_SOFTCREAM:
+        self.score = Score(26, 4, self.score.word + 700, COLOR_ORANGE, COLOR_BROWN)
       return False
     else:
       return True
