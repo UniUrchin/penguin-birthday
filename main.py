@@ -34,6 +34,8 @@ PAGE_MAIN_MENU     = 0
 PAGE_GAME_SCREEN   = 1
 PAGE_RESULT_SCREEN = 2
 
+# TODO: Pyxelアプリケーションフォルダをもう一つ下に堀る(Pyxelのビルドでちょっと困る)
+
 class PyxelText:
   def __init__(self, pos_x, pos_y, word, color):
     self.pos_x = pos_x
@@ -126,7 +128,7 @@ class Sweets(PyxelImage):
 class App:
   def __init__(self):
     pyxel.init(128, 128, title = "Birthday Penguin")
-    pyxel.load("assetes/penguin.pyxres")
+    pyxel.load("assets/main.pyxres")
 
     self.stage = PyxelImage(0, 0, 1, 0, 0, 128, 128)
     self.score = Score(26, 4, 0, COLOR_ORANGE, COLOR_BROWN)
